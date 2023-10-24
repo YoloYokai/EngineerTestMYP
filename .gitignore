@@ -5,3 +5,5 @@ obj/
 
 *.zip
 *.DotSettings.user
+*.vsidx
+*.suo
