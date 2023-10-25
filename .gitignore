@@ -7,3 +7,6 @@ obj/
 *.DotSettings.user
 *.vsidx
 *.suo
+*.v2
+*.v1
+/.vs/slnx.sqlite

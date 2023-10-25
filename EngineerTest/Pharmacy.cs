@@ -11,11 +11,11 @@ public class Pharmacy : IPharmacy
         _drugs.Add(drug);
         return drug;
     }
-    public IEnumerable<IDrug> UpdateBenefitValueRefactor()
+    public IEnumerable<IDrug> UpdateBenefitValue()
     {
         foreach(var drug in _drugs)
         {
-            if(drug.ExpiresIn <= 0)
+            if(drug.ExpiresIn >= 0)
             {
                 switch (drug.Name)
                 {
@@ -27,6 +27,7 @@ public class Pharmacy : IPharmacy
                     case "Fervex":
                         if (drug.ExpiresIn <= 5) drug.Benefit += 3;
                         else if (drug.ExpiresIn <= 10) drug.Benefit += 2;
+                        else if (drug.ExpiresIn > 1) drug.Benefit += 1;
                         break;
                     default:
                         drug.Benefit = drug.Benefit - _Benefitdecrease;
@@ -52,86 +53,23 @@ public class Pharmacy : IPharmacy
             }
             if(drug.Benefit < 0) drug.Benefit = 0;
             if(drug.Benefit > 50) drug.Benefit = 50;
+
+
+
+            switch (drug.Name)
+            {
+                case "Magic Pill":
+                    break;
+                default:
+                    drug.ExpiresIn -= 1;
+                    break;
+            }
+
         }
-        return _drugs;
-    }
-    public IEnumerable<IDrug> UpdateBenefitValue()
-    {
-        for (var i = 0; i < _drugs.Count; i++)
-        {
-            if (
-                _drugs[i].Name != "Herbal Tea" &&
-                _drugs[i].Name != "Fervex"
-            )
-            {
-                if (_drugs[i].Benefit > 0)
-                {
-                    if (_drugs[i].Name != "Magic Pill")
-                    {
-                        _drugs[i].Benefit = _drugs[i].Benefit - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (_drugs[i].Benefit < 50)
-                {
-                    _drugs[i].Benefit = _drugs[i].Benefit + 1;
-                    if (_drugs[i].Name == "Fervex")
-                    {
-                        if (_drugs[i].ExpiresIn < 11)
-                        {
-                            if (_drugs[i].Benefit < 50)
-                            {
-                                _drugs[i].Benefit = _drugs[i].Benefit + 1;
-                            }
-                        }
 
-                        if (_drugs[i].ExpiresIn < 6)
-                        {
-                            if (_drugs[i].Benefit < 50)
-                            {
-                                _drugs[i].Benefit = _drugs[i].Benefit + 1;
-                            }
-                        }
-                    }
-                }
-            }
 
-            if (_drugs[i].Name != "Magic Pill")
-            {
-                _drugs[i].ExpiresIn = _drugs[i].ExpiresIn - 1;
-            }
 
-            if (_drugs[i].ExpiresIn < 0)
-            {
-                if (_drugs[i].Name != "Herbal Tea")
-                {
-                    if (_drugs[i].Name != "Fervex")
-                    {
-                        if (_drugs[i].Benefit > 0)
-                        {
-                            if (_drugs[i].Name != "Magic Pill")
-                            {
-                                _drugs[i].Benefit = _drugs[i].Benefit - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _drugs[i].Benefit =
-                            _drugs[i].Benefit - _drugs[i].Benefit;
-                    }
-                }
-                else
-                {
-                    if (_drugs[i].Benefit < 50)
-                    {
-                        _drugs[i].Benefit = _drugs[i].Benefit + 1;
-                    }
-                }
-            }
-        }
+
 
         return _drugs;
     }
