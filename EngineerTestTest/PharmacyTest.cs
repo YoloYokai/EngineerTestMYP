@@ -39,23 +39,26 @@ public class PharmacyTest
             pharmacy.UpdateBenefitValue());
     }
     [Fact]
-    public void TestCase()
+    public void TestCaseCompare()
     {
         var pharmacy = new Pharmacy();
         pharmacy.AddDrug("Doliprane", 20, 30);
         pharmacy.AddDrug("Herbal Tea", 10, 5);
         pharmacy.AddDrug("Fervex", 12, 35);
         pharmacy.AddDrug("Magic Pill", 15, 40);
+
+        var Testpharmacy = new Pharmacy();
+        Testpharmacy.AddDrug("Doliprane", 20, 30);
+        Testpharmacy.AddDrug("Herbal Tea", 10, 5);
+        Testpharmacy.AddDrug("Fervex", 12, 35);
+        Testpharmacy.AddDrug("Magic Pill", 15, 40);
+
         for (var elapsedDays = 0; elapsedDays < 30; elapsedDays++)
         {
             pharmacy.UpdateBenefitValue();
+
+            Assert.Equal(Testpharmacy.refactoredcode(),
+           pharmacy.UpdateBenefitValue());
         }
-        List<Drug> output = new List<Drug>();
-        output.Add(new Drug("Doliprane", -10, 0));
-        output.Add(new Drug("Herbal Tea", -20, 50));
-        output.Add(new Drug("Fervex", -18, 0));
-        output.Add(new Drug("Magic Pill", 15, 40));
-
-
     }
 }
