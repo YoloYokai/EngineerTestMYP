@@ -15,6 +15,7 @@ public class Pharmacy : IPharmacy
     {
         foreach(var drug in _drugs)
         {
+            //non expired logic
             if(drug.ExpiresIn >= 0)
             {
                 switch (drug.Name)
@@ -25,15 +26,16 @@ public class Pharmacy : IPharmacy
                     case "Magic Pill":
                         break;
                     case "Fervex":
-                        if (drug.ExpiresIn <= 5) drug.Benefit += 3;
-                        else if (drug.ExpiresIn <= 10) drug.Benefit += 2;
-                        else if (drug.ExpiresIn > 1) drug.Benefit += 1;
+                        if (drug.ExpiresIn <= 5) drug.Benefit += _Benefitdecrease*3;
+                        else if (drug.ExpiresIn <= 10) drug.Benefit += _Benefitdecrease*2;
+                        else if (drug.ExpiresIn > 1) drug.Benefit += _Benefitdecrease;
                         break;
                     default:
                         drug.Benefit = drug.Benefit - _Benefitdecrease;
                         break;
                 }
             }
+            //expired logic
             else
             {
                 switch (drug.Name)
@@ -54,11 +56,12 @@ public class Pharmacy : IPharmacy
                         break;
                 }
             }
+            //catches for exceeding bounds
             if(drug.Benefit < 0) drug.Benefit = 0;
             if(drug.Benefit > 50) drug.Benefit = 50;
 
 
-
+            //expire increment logic
             switch (drug.Name)
             {
                 case "Magic Pill":
@@ -69,11 +72,6 @@ public class Pharmacy : IPharmacy
             }
 
         }
-
-
-
-
-
         return _drugs;
     }
 }
