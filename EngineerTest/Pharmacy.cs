@@ -46,6 +46,9 @@ public class Pharmacy : IPharmacy
                     case "Fervex":
                         drug.Benefit = 0;
                         break;
+                    case "Dafalgan":
+                        drug.Benefit = drug.Benefit - (_Benefitdecrease * _ExpiredMulti * 2);
+                        break;
                     default:
                         drug.Benefit = drug.Benefit - (_Benefitdecrease * _ExpiredMulti);
                         break;
